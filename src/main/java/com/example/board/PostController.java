@@ -16,17 +16,17 @@ public class PostController {
     }
 
     @PostMapping
-    public Post create(@RequestBody PostRequest request) {
+    public PostResponse create(@RequestBody PostRequest request) {
         return postService.create(request);
     }
 
     @GetMapping
-    public List<Post> findAll() {
+    public List<PostResponse> findAll() {
         return postService.findAll();
     }
 
     @GetMapping("/{id}")
-    public Post findById(@PathVariable("id") Long id) {
+    public PostResponse findById(@PathVariable("id") Long id) {
         return postService.findById(id);
     }
 
@@ -37,7 +37,7 @@ public class PostController {
     }
 
     @PutMapping("/{id}")
-    public Post updateById(@PathVariable("id") Long id, @RequestBody PostRequest request) {
+    public PostResponse updateById(@PathVariable("id") Long id, @RequestBody PostRequest request) {
         return postService.update(id, request);
     }
 }

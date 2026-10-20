@@ -17,24 +17,27 @@ public class PostService {
         this.postRepository = postRepository;
     }
 
-    public Post create(PostRequest request) {
-        return postRepository.save(new Post(request.title(), request.content()));
+    public PostResponse create(PostRequest request) {
+        return PostResponse.from(postRepository.save(new Post(request.title(), request.content())));
     }
 
     @Transactional(readOnly = true)
-    public List<Post> findAll() {
-        return postRepository.findAll();
+    public List<PostResponse> findAll() {
+        return postRepository.findAll()
+                .stream()
+                .map(PostResponse::from)
+                .toList();
     }
 
     @Transactional(readOnly = true)
-    public Post findById(Long id) {
-        return findPost(id);
+    public PostResponse findById(Long id) {
+        return PostResponse.from(findPost(id));
     }
 
-    public Post update(Long id, PostRequest request) {
+    public PostResponse update(Long id, PostRequest request) {
         Post post = findPost(id);
         post.update(request.title(), request.content());
-        return post;
+        return PostResponse.from(post);
     }
 
     public void delete(Long id) {
